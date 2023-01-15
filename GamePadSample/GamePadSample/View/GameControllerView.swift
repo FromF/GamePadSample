@@ -12,10 +12,72 @@ struct GameControllerView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            HStack {
+                VStack {
+                    Text("L2")
+                        .background(viewModel.buttonL2 ? Color.red : Color.clear)
+                    Text("L1")
+                        .background(viewModel.buttonL1 ? Color.red : Color.clear)
+                }
+                .padding()
+                Spacer()
+                VStack {
+                    Text("R2")
+                        .background(viewModel.buttonR2 ? Color.red : Color.clear)
+                    Text("R1")
+                        .background(viewModel.buttonR1 ? Color.red : Color.clear)
+                }
+                .padding()
+            }
+            .padding()
+            HStack {
+                VStack {
+                    Text("↑")
+                        .background(viewModel.buttonUp ? Color.red : Color.clear)
+                    HStack {
+                        Text("←")
+                            .background(viewModel.buttonLeft ? Color.red : Color.clear)
+                        Text("　")
+                        Text("→")
+                            .background(viewModel.buttonRight ? Color.red : Color.clear)
+                    }
+                    Text("↓")
+                        .background(viewModel.buttonDown ? Color.red : Color.clear)
+                }
+                Text("Option")
+                    .background(viewModel.buttonOption ? Color.red : Color.clear)
+                    .padding()
+                Spacer()
+                Text("Menu")
+                    .background(viewModel.buttonMenu ? Color.red : Color.clear)
+                    .padding()
+                VStack {
+                    Text("△")
+                        .background(viewModel.buttonY ? Color.red : Color.clear)
+                    HStack {
+                        Text("□")
+                            .background(viewModel.buttonX ? Color.red : Color.clear)
+                        Text("　")
+                        Text("◯")
+                            .background(viewModel.buttonB ? Color.red : Color.clear)
+                    }
+                    Text("×")
+                        .background(viewModel.buttonA ? Color.red : Color.clear)
+                }
+            }
+            .padding()
+            HStack {
+                Spacer()
+                Text("◯")
+                    .background(viewModel.buttonStickL ? Color.red : Color.clear)
+                    .offset(x: viewModel.buttonStickLOffsetX * 20.0, y: viewModel.buttonStickLOffsetY * -20.0)
+                Spacer()
+                Text("◯")
+                    .background(viewModel.buttonStickR ? Color.red : Color.clear)
+                    .offset(x: viewModel.buttonStickROffsetX * 20.0, y: viewModel.buttonStickROffsetY * -20.0)
+                Spacer()
+            }
+            .padding()
         }
         .padding()
         .onAppear {
