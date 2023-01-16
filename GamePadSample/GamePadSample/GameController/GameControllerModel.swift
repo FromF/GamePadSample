@@ -44,7 +44,7 @@ class GameControllerModel: NSObject {
     }
     
     @objc private func handleControllerDidConnect(notification: Notification) {
-        print(">>Debug \(#fileID) \(#line)  ")
+        print(">>Debug \(#fileID) \(#function) \(#line)  ")
         guard let controller = notification.object as? GCController else {
             return
         }
@@ -52,23 +52,23 @@ class GameControllerModel: NSObject {
     }
     
     @objc private func handleControllerDidDisconnect(notification: Notification) {
-        print(">>Debug \(#fileID) \(#line)  ")
+        print(">>Debug \(#fileID) \(#function) \(#line)  ")
+        guard let controller = notification.object as? GCController else {
+            return
+        }
+        guard let _ = controller.extendedGamepad else {
+            return
+        }
+        let product = gameControllerProduct(controller: controller)
+        operationGamePad(.disconnected, product: product)
     }
     
     private func setupGameController(controller: GCController) {
-        var product: GameControllerProduct = .other
+        let product = gameControllerProduct(controller: controller)
         guard let gamepad = controller.extendedGamepad else {
             return
         }
-        print(">>Debug \(#fileID) \(#line) \(controller.productCategory) \(controller.vendorName)")
-                
-        if controller.vendorName?.hasPrefix("Joy-Con") ?? false {
-            product = .JoyCon
-        } else if controller.vendorName?.hasPrefix("Xbox") ?? false {
-            product = .Xbox
-        } else {
-            product = .other
-        }
+        print(">>Debug \(#fileID) \(#function) \(#line) | \(controller.productCategory) | \(controller.vendorName ?? "nil")")
         
         operationGamePad(.connected, product: product)
         
@@ -144,7 +144,19 @@ class GameControllerModel: NSObject {
     }
     
     private func operationGamePad(_ operation: GameControllerOperation, product: GameControllerProduct) {
-        print(">>Debug \(#fileID) \(#line) : \(operation) \(product)")
+        print(">>Debug \(#fileID) \(#function) \(#line) : \(operation) \(product)")
         self.delegate?.operationGamePad(operation, product: product)
+    }
+    
+    private func gameControllerProduct(controller: GCController) -> GameControllerProduct {
+        print(">>Debug \(#fileID) \(#function) \(#line) | \(controller.productCategory) | \(controller.vendorName ?? "nil")")
+        var product: GameControllerProduct = .other
+        if controller.vendorName?.hasPrefix("Joy-Con") ?? false {
+            product = .JoyCon
+        } else if controller.vendorName?.hasPrefix("Xbox") ?? false {
+            product = .Xbox
+        }
+        
+        return product
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 
 enum GameControllerOperation {
     case connected
+    case disconnected
     case upPress
     case upRelease
     case downPress

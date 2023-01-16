@@ -47,6 +47,8 @@ extension GameControllerViewModel: GameControllerDelegate {
         switch operation {
         case .connected:
             controllerProduct = product
+        case .disconnected:
+            break
         case .upPress:
             buttonUp = true
         case .upRelease:
