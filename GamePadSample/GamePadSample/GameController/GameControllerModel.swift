@@ -9,7 +9,7 @@ import Foundation
 import GameController
 
 protocol GameControllerDelegate {
-    func operationGamePad(_ operation: GameControllerOperation)
+    func operationGamePad(_ operation: GameControllerOperation, product: GameControllerProduct)
 }
 
 class GameControllerModel: NSObject {
@@ -56,84 +56,95 @@ class GameControllerModel: NSObject {
     }
     
     private func setupGameController(controller: GCController) {
+        var product: GameControllerProduct = .other
         guard let gamepad = controller.extendedGamepad else {
             return
         }
-        print(">>Debug \(#fileID) \(#line)  ")
-
+        print(">>Debug \(#fileID) \(#line) \(controller.productCategory) \(controller.vendorName)")
+                
+        if controller.vendorName?.hasPrefix("Joy-Con") ?? false {
+            product = .JoyCon
+        } else if controller.vendorName?.hasPrefix("Xbox") ?? false {
+            product = .Xbox
+        } else {
+            product = .other
+        }
+        
+        operationGamePad(.connected, product: product)
+        
         gamepad.dpad.up.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .upPress : .upRelease)
+            self?.operationGamePad(isPressed ? .upPress : .upRelease, product: product)
         }
         gamepad.dpad.down.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .downPress : .downRelease)
+            self?.operationGamePad(isPressed ? .downPress : .downRelease, product: product)
         }
         gamepad.dpad.left.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .leftPress : .leftRelease)
+            self?.operationGamePad(isPressed ? .leftPress : .leftRelease, product: product)
         }
         gamepad.dpad.right.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .rightPress : .rightRelease)
+            self?.operationGamePad(isPressed ? .rightPress : .rightRelease, product: product)
         }
         gamepad.dpad.xAxis.valueChangedHandler = { [weak self] (_, value) in
-            self?.operationGamePad(.xAxis(value))
+            self?.operationGamePad(.xAxis(value), product: product)
         }
         gamepad.dpad.yAxis.valueChangedHandler = { [weak self] (_, value) in
-            self?.operationGamePad(.yAxis(value))
+            self?.operationGamePad(.yAxis(value), product: product)
         }
         gamepad.buttonA.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonAPress : .buttonARelease)
+            self?.operationGamePad(isPressed ? .buttonAPress : .buttonARelease, product: product)
         }
         gamepad.buttonB.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonBPress : .buttonBRelease)
+            self?.operationGamePad(isPressed ? .buttonBPress : .buttonBRelease, product: product)
         }
         gamepad.buttonX.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonXPress : .buttonXRelease)
+            self?.operationGamePad(isPressed ? .buttonXPress : .buttonXRelease, product: product)
         }
         gamepad.buttonY.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonYPress : .buttonYRelease)
+            self?.operationGamePad(isPressed ? .buttonYPress : .buttonYRelease, product: product)
         }
         gamepad.buttonMenu.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonMenuPress : .buttonMenuRelease)
+            self?.operationGamePad(isPressed ? .buttonMenuPress : .buttonMenuRelease, product: product)
         }
         gamepad.buttonOptions?.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonOptionsPress : .buttonOptionsRelease)
+            self?.operationGamePad(isPressed ? .buttonOptionsPress : .buttonOptionsRelease, product: product)
         }
         gamepad.buttonHome?.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonHomePress : .buttonHomeRelease)
+            self?.operationGamePad(isPressed ? .buttonHomePress : .buttonHomeRelease, product: product)
         }
         gamepad.leftThumbstick.xAxis.valueChangedHandler = { [weak self] (_, value) in
-            self?.operationGamePad(.leftXAxis(value))
+            self?.operationGamePad(.leftXAxis(value), product: product)
         }
         gamepad.leftThumbstick.yAxis.valueChangedHandler = { [weak self] (_, value) in
-            self?.operationGamePad(.leftYAxis(value))
+            self?.operationGamePad(.leftYAxis(value), product: product)
         }
         gamepad.rightThumbstick.xAxis.valueChangedHandler = { [weak self] (_, value) in
-            self?.operationGamePad(.rightXAxis(value))
+            self?.operationGamePad(.rightXAxis(value), product: product)
         }
         gamepad.rightThumbstick.yAxis.valueChangedHandler = { [weak self] (_, value) in
-            self?.operationGamePad(.rightYAxis(value))
+            self?.operationGamePad(.rightYAxis(value), product: product)
         }
         gamepad.leftShoulder.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonLeftShoulderPress : .buttonLeftShoulderRelease)
+            self?.operationGamePad(isPressed ? .buttonLeftShoulderPress : .buttonLeftShoulderRelease, product: product)
         }
         gamepad.rightShoulder.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonRightShoulderPress : .buttonRightShoulderRelease)
+            self?.operationGamePad(isPressed ? .buttonRightShoulderPress : .buttonRightShoulderRelease, product: product)
         }
         gamepad.leftTrigger.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonLeftTriggerPress : .buttonLeftTriggerRelease)
+            self?.operationGamePad(isPressed ? .buttonLeftTriggerPress : .buttonLeftTriggerRelease, product: product)
         }
         gamepad.rightTrigger.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .buttonRightTriggerPress : .buttonRightTriggerRelease)
+            self?.operationGamePad(isPressed ? .buttonRightTriggerPress : .buttonRightTriggerRelease, product: product)
         }
         gamepad.leftThumbstickButton?.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .leftAxisPress : .leftAxisRelease)
+            self?.operationGamePad(isPressed ? .leftAxisPress : .leftAxisRelease, product: product)
         }
         gamepad.rightThumbstickButton?.pressedChangedHandler = { [weak self] (_, _, isPressed) in
-            self?.operationGamePad(isPressed ? .rightAxisPress : .rightAxisRelease)
+            self?.operationGamePad(isPressed ? .rightAxisPress : .rightAxisRelease, product: product)
         }
     }
     
-    private func operationGamePad(_ operation: GameControllerOperation) {
-        print(">>Debug \(#fileID) \(#line) : \(operation)")
-        self.delegate?.operationGamePad(operation)
+    private func operationGamePad(_ operation: GameControllerOperation, product: GameControllerProduct) {
+        print(">>Debug \(#fileID) \(#line) : \(operation) \(product)")
+        self.delegate?.operationGamePad(operation, product: product)
     }
 }

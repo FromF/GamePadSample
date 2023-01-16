@@ -31,18 +31,22 @@ struct GameControllerView: View {
             }
             .padding()
             HStack {
-                VStack {
-                    Text("↑")
-                        .background(viewModel.buttonUp ? Color.red : Color.clear)
-                    HStack {
-                        Text("←")
-                            .background(viewModel.buttonLeft ? Color.red : Color.clear)
-                        Text("　")
-                        Text("→")
-                            .background(viewModel.buttonRight ? Color.red : Color.clear)
+                ZStack {
+                    VStack {
+                        Text("↑")
+                            .background(viewModel.buttonUp ? Color.red : Color.clear)
+                        HStack {
+                            Text("←")
+                                .background(viewModel.buttonLeft ? Color.red : Color.clear)
+                            Text("　")
+                            Text("→")
+                                .background(viewModel.buttonRight ? Color.red : Color.clear)
+                        }
+                        Text("↓")
+                            .background(viewModel.buttonDown ? Color.red : Color.clear)
                     }
-                    Text("↓")
-                        .background(viewModel.buttonDown ? Color.red : Color.clear)
+                    Text("●")
+                        .offset(x: viewModel.buttonCursorOffsetX * 25.0, y: viewModel.buttonCursorOffsetY * -25.0)
                 }
                 Text("Option")
                     .background(viewModel.buttonOption ? Color.red : Color.clear)
@@ -51,18 +55,48 @@ struct GameControllerView: View {
                 Text("Menu")
                     .background(viewModel.buttonMenu ? Color.red : Color.clear)
                     .padding()
-                VStack {
-                    Text("△")
-                        .background(viewModel.buttonY ? Color.red : Color.clear)
-                    HStack {
-                        Text("□")
+                if viewModel.controllerProduct == .JoyCon {
+                    VStack {
+                        Text("X")
                             .background(viewModel.buttonX ? Color.red : Color.clear)
-                        Text("　")
-                        Text("◯")
+                        HStack {
+                            Text("Y")
+                                .background(viewModel.buttonY ? Color.red : Color.clear)
+                            Text("　")
+                            Text("A")
+                                .background(viewModel.buttonA ? Color.red : Color.clear)
+                        }
+                        Text("B")
                             .background(viewModel.buttonB ? Color.red : Color.clear)
                     }
-                    Text("×")
-                        .background(viewModel.buttonA ? Color.red : Color.clear)
+                } else if viewModel.controllerProduct == .Xbox {
+                    VStack {
+                        Text("Y")
+                            .background(viewModel.buttonY ? Color.red : Color.clear)
+                        HStack {
+                            Text("X")
+                                .background(viewModel.buttonX ? Color.red : Color.clear)
+                            Text("　")
+                            Text("B")
+                                .background(viewModel.buttonB ? Color.red : Color.clear)
+                        }
+                        Text("A")
+                            .background(viewModel.buttonA ? Color.red : Color.clear)
+                    }
+                } else {
+                    VStack {
+                        Text("△")
+                            .background(viewModel.buttonY ? Color.red : Color.clear)
+                        HStack {
+                            Text("□")
+                                .background(viewModel.buttonX ? Color.red : Color.clear)
+                            Text("　")
+                            Text("◯")
+                                .background(viewModel.buttonB ? Color.red : Color.clear)
+                        }
+                        Text("×")
+                            .background(viewModel.buttonA ? Color.red : Color.clear)
+                    }
                 }
             }
             .padding()

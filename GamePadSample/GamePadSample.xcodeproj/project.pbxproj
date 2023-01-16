@@ -14,6 +14,7 @@
 		9D5962C92974330400B2FE5E /* GameControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5962C82974330400B2FE5E /* GameControllerModel.swift */; };
 		9D5962CB297433E700B2FE5E /* GameControllerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5962CA297433E700B2FE5E /* GameControllerOperation.swift */; };
 		9D70217229743FEF00C7F8D0 /* GameControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70217129743FEF00C7F8D0 /* GameControllerViewModel.swift */; };
+		9D70217729750AEB00C7F8D0 /* GameControllerProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70217629750AEB00C7F8D0 /* GameControllerProduct.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		9D5962CA297433E700B2FE5E /* GameControllerOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControllerOperation.swift; sourceTree = "<group>"; };
 		9D70217129743FEF00C7F8D0 /* GameControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControllerViewModel.swift; sourceTree = "<group>"; };
 		9D702173297441A700C7F8D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9D70217629750AEB00C7F8D0 /* GameControllerProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControllerProduct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 		9D7021702974342F00C7F8D0 /* GameController */ = {
 			isa = PBXGroup;
 			children = (
+				9D70217629750AEB00C7F8D0 /* GameControllerProduct.swift */,
 				9D5962CA297433E700B2FE5E /* GameControllerOperation.swift */,
 				9D5962C82974330400B2FE5E /* GameControllerModel.swift */,
 			);
@@ -173,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D70217229743FEF00C7F8D0 /* GameControllerViewModel.swift in Sources */,
+				9D70217729750AEB00C7F8D0 /* GameControllerProduct.swift in Sources */,
 				9D5962BD297432EE00B2FE5E /* GameControllerView.swift in Sources */,
 				9D5962CB297433E700B2FE5E /* GameControllerOperation.swift in Sources */,
 				9D5962BB297432EE00B2FE5E /* GamePadSampleApp.swift in Sources */,

@@ -9,11 +9,14 @@ import SwiftUI
 
 class GameControllerViewModel: NSObject, ObservableObject {
     private let gameControllerModel = GameControllerModel()
+    @Published var controllerProduct: GameControllerProduct = .other
     @Published var buttonL1 = false
     @Published var buttonL2 = false
     @Published var buttonR1 = false
     @Published var buttonR2 = false
     @Published var buttonUp = false
+    @Published var buttonCursorOffsetX = 0.0
+    @Published var buttonCursorOffsetY = 0.0
     @Published var buttonDown = false
     @Published var buttonLeft = false
     @Published var buttonRight = false
@@ -40,8 +43,10 @@ class GameControllerViewModel: NSObject, ObservableObject {
 }
 
 extension GameControllerViewModel: GameControllerDelegate {
-    func operationGamePad(_ operation: GameControllerOperation) {
+    func operationGamePad(_ operation: GameControllerOperation, product: GameControllerProduct) {
         switch operation {
+        case .connected:
+            controllerProduct = product
         case .upPress:
             buttonUp = true
         case .upRelease:
@@ -58,10 +63,10 @@ extension GameControllerViewModel: GameControllerDelegate {
             buttonRight = true
         case .rightRelease:
             buttonRight = false
-        case .xAxis(let _):
-            print(">>Debug \(#fileID) \(#line)  ")
-        case .yAxis(let _):
-            print(">>Debug \(#fileID) \(#line)  ")
+        case .xAxis(let value):
+            buttonCursorOffsetX = Double(value)
+        case .yAxis(let value):
+            buttonCursorOffsetY = Double(value)
         case .buttonAPress:
             buttonA = true
         case .buttonARelease:
