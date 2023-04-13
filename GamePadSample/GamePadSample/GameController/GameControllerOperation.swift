@@ -50,4 +50,5 @@ enum GameControllerOperation {
     case buttonLeftTriggerRelease
     case buttonRightTriggerPress
     case buttonRightTriggerRelease
+    case acceleration(x: Double, y: Double, z:Double)
 }

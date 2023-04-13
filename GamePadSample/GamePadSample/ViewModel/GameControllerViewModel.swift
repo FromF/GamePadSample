@@ -129,6 +129,8 @@ extension GameControllerViewModel: GameControllerDelegate {
             buttonR2 = true
         case .buttonRightTriggerRelease:
             buttonR2 = false
+        case .acceleration(x: let x, y: let y, z: let z):
+            print("acceleration \(x),\(y),\(z)")
         }
     }
 }

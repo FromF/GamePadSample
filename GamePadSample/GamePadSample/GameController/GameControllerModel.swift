@@ -68,9 +68,18 @@ class GameControllerModel: NSObject {
         guard let gamepad = controller.extendedGamepad else {
             return
         }
-        print(">>Debug \(#fileID) \(#function) \(#line) | \(controller.productCategory) | \(controller.vendorName ?? "nil")")
+        print(">>Debug \(#fileID) \(#function) \(#line) | \(controller.productCategory) | \(controller.vendorName ?? "nil") \(product)")
         
         operationGamePad(.connected, product: product)
+        
+        _ = Timer(timeInterval: 0.1, repeats: true, block: { timer in
+            if let acceleration = gamepad.controller?.motion?.acceleration {
+                let operation: GameControllerOperation = .acceleration(x: acceleration.x, y: acceleration.y, z: acceleration.z)
+                self.operationGamePad(operation, product: product)
+            } else {
+                timer.invalidate()
+            }
+        })
         
         gamepad.dpad.up.pressedChangedHandler = { [weak self] (_, _, isPressed) in
             self?.operationGamePad(isPressed ? .upPress : .upRelease, product: product)
@@ -149,12 +158,16 @@ class GameControllerModel: NSObject {
     }
     
     private func gameControllerProduct(controller: GCController) -> GameControllerProduct {
-        print(">>Debug \(#fileID) \(#function) \(#line) | \(controller.productCategory) | \(controller.vendorName ?? "nil")")
+        // print(">>Debug \(#fileID) \(#function) \(#line) | \(controller.productCategory) | \(controller.vendorName ?? "nil")")
         var product: GameControllerProduct = .other
-        if controller.vendorName?.hasPrefix("Joy-Con") ?? false {
-            product = .JoyCon
-        } else if controller.vendorName?.hasPrefix("Xbox") ?? false {
+        if controller.productCategory.hasPrefix("Nintendo Switch") {
+            product = .Switch
+        } else if controller.productCategory.hasPrefix("Xbox") {
             product = .Xbox
+        } else if controller.productCategory.hasPrefix("DualShock 4") {
+            product = .PS4
+        } else if controller.productCategory.hasPrefix("DualSense") {
+            product = .PS5
         }
         
         return product

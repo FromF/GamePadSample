@@ -9,6 +9,8 @@ import Foundation
 
 enum GameControllerProduct {
     case Xbox
-    case JoyCon
+    case Switch
+    case PS4
+    case PS5
     case other
 }

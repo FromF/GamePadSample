@@ -55,7 +55,7 @@ struct GameControllerView: View {
                 Text("Menu")
                     .background(viewModel.buttonMenu ? Color.red : Color.clear)
                     .padding()
-                if viewModel.controllerProduct == .JoyCon {
+                if viewModel.controllerProduct == .Switch {
                     VStack {
                         Text("X")
                             .background(viewModel.buttonX ? Color.red : Color.clear)
