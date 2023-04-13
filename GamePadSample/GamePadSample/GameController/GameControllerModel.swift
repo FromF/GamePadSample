@@ -160,13 +160,13 @@ class GameControllerModel: NSObject {
     private func gameControllerProduct(controller: GCController) -> GameControllerProduct {
         // print(">>Debug \(#fileID) \(#function) \(#line) | \(controller.productCategory) | \(controller.vendorName ?? "nil")")
         var product: GameControllerProduct = .other
-        if controller.productCategory.hasPrefix("Nintendo Switch") {
+        if controller.productCategory.hasPrefix("Nintendo") {
             product = .Switch
-        } else if controller.productCategory.hasPrefix("Xbox") {
+        } else if controller.productCategory.hasPrefix(GCProductCategoryXboxOne) {
             product = .Xbox
-        } else if controller.productCategory.hasPrefix("DualShock 4") {
+        } else if controller.productCategory.hasPrefix(GCProductCategoryDualShock4) {
             product = .PS4
-        } else if controller.productCategory.hasPrefix("DualSense") {
+        } else if controller.productCategory.hasPrefix(GCProductCategoryDualSense) {
             product = .PS5
         }
         
