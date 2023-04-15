@@ -59,12 +59,12 @@ class GameControllerModel: NSObject {
         guard let _ = controller.extendedGamepad else {
             return
         }
-        let product = gameControllerProduct(controller: controller)
+        let product = GameControllerProduct(controller: controller)
         operationGamePad(.disconnected, product: product)
     }
     
     private func setupGameController(controller: GCController) {
-        let product = gameControllerProduct(controller: controller)
+        let product = GameControllerProduct(controller: controller)
         guard let gamepad = controller.extendedGamepad else {
             return
         }
@@ -155,21 +155,5 @@ class GameControllerModel: NSObject {
     private func operationGamePad(_ operation: GameControllerOperation, product: GameControllerProduct) {
         print(">>Debug \(#fileID) \(#function) \(#line) : \(operation) \(product)")
         self.delegate?.operationGamePad(operation, product: product)
-    }
-    
-    private func gameControllerProduct(controller: GCController) -> GameControllerProduct {
-        // print(">>Debug \(#fileID) \(#function) \(#line) | \(controller.productCategory) | \(controller.vendorName ?? "nil")")
-        var product: GameControllerProduct = .other
-        if controller.productCategory.hasPrefix("Nintendo") {
-            product = .Switch
-        } else if controller.productCategory.hasPrefix(GCProductCategoryXboxOne) {
-            product = .Xbox
-        } else if controller.productCategory.hasPrefix(GCProductCategoryDualShock4) {
-            product = .PS4
-        } else if controller.productCategory.hasPrefix(GCProductCategoryDualSense) {
-            product = .PS5
-        }
-        
-        return product
     }
 }
